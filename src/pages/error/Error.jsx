@@ -2,7 +2,7 @@
 export default function Error() {
   return (
     <div>
-      error
+      <p>404-page not found.</p>
     </div>
   )
 }
