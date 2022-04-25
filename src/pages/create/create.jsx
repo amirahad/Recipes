@@ -1,4 +1,4 @@
-import { useState,useRef,useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useFetch } from "../../hooks/useFetch";
 import { useNavigate } from "react-router-dom";
 import "./create.css";
@@ -7,17 +7,22 @@ export default function Create() {
   const [title, setTitle] = useState("");
   const [method, setMethod] = useState("");
   const [cookingTime, setCookingTime] = useState("");
-  const [newIngredient, setNewIngredient] = useState('');
+  const [newIngredient, setNewIngredient] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const ingredientInput = useRef(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { postData, data } = useFetch('http://localhost:3000/recipes', 'POST')
+  const { postData, data } = useFetch("http://localhost:3000/recipes", "POST");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log(title, method, cookingTime, ingredient);
-    postData({title, ingredients, method, cookingTime: cookingTime + ' minutes'})
+    postData({
+      title,
+      ingredients,
+      method,
+      cookingTime: cookingTime + " minutes",
+    });
   };
   const handleAdd = (e) => {
     e.preventDefault();
@@ -26,18 +31,18 @@ export default function Create() {
     if (ing && !ingredients.includes(ing)) {
       setIngredients((prevIngredients) => [...prevIngredients, newIngredient]);
     }
-    if(ingredients.includes(ing)){
-      alert(`${ing} already exists.`)
+    if (ingredients.includes(ing)) {
+      alert(`${ing} already exists.`);
     }
-    setNewIngredient("")
-    ingredientInput.current.focus()
+    setNewIngredient("");
+    ingredientInput.current.focus();
   };
 
-  useEffect(()=>{
-    if(data) {
-      navigate('/')
+  useEffect(() => {
+    if (data) {
+      navigate("/");
     }
-  },[data,navigate])
+  }, [data, navigate]);
 
   return (
     <div className="create">
@@ -66,7 +71,12 @@ export default function Create() {
             </button>
           </div>
         </label>
-            <p>current Ingredients: {ingredients.map(i => <em key={i}>{i},</em>)}</p>
+        <p>
+          Current Ingredients:{" "}
+          {ingredients.map((i) => (
+            <em key={i}>{i},</em>
+          ))}
+        </p>
         <label>
           <span>Recipe Method:</span>
           <textarea
